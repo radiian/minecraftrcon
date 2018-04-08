@@ -1,17 +1,22 @@
 const net = require('net');
-const http = require('http');
+const readline = require('readline');
 
+const rl = readline.createInterface({
+	input: process.stdin,
+	output: process.stdout
+});
 
+console.log("started server");
+var host = '127.0.0.1';
+var port = 25575;
 
-	console.log("started server");
-	var host = '127.0.0.1';
-	var port = 25575;
+var connected = false;
 	
-	var client = new net.Socket();
-	client.setKeepAlive(true);	
+var client = new net.Socket();
+client.setKeepAlive(true);
+client.setEncoding("ASCII");	
 client.connect(port, host, function() {
-		console.log("Connected to server");
-
+	console.log("Connected to server");
 });
 
 function pack(id, type, message){
@@ -25,10 +30,13 @@ function pack(id, type, message){
 }
 		
 	var test = pack(10, 3, "mcarc1234$");
-	console.log(test);
+	//console.log(test);
 	client.write(test);
+
 	var pack2 = pack(11, 2, "list");
 	client.write(pack2);
+	//var help = pack(12, 2, "help");
+	//client.write(help);
 	//client.write(finalmessage.toString("utf8"), "UTF8", function(){
 		//	console.log("Writing has completed");
 

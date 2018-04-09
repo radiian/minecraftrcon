@@ -1,5 +1,29 @@
 const net = require('net');
 const http = require('http');
+const path = require('path');
+const express = require('express');
+const exphbs = require('express-handlebars');
+const fs = require('fs');
+var app = express();
+app.engine('handlebars', exphbs());
+app.set('view engine', 'handlebars');
+//app.use(express.static('public'));
+
+
+var status = "";
+
+
+app.get('*', function(req, res){
+	res.status(200);
+	res.render('Splash', { stat: status});
+
+});
+
+
+
+app.listen(8080, function(){
+	console.log("Started web server");
+});
 
 console.log("started server");
 
@@ -7,6 +31,7 @@ var host = '127.0.0.1';
 var port = 25575;
 var gid = 1;
 var connected = false;
+
 
 
 var cmdqueue = [];
@@ -74,7 +99,7 @@ function influxIt(measurement, value){
 
 	
 	login("mcarc1234$");
-	setInterval(getcount, 2000);
+	setInterval(getcount, 5000);
 	//setInterval(announce, 5000);
 	//while(!connected){}
 	//sendcmd("list");	
@@ -111,6 +136,7 @@ client.on('data', function(data){
 		//log it to the thing
 		console.log("Going to write data to influx");		
 		console.log(response);
+		status = response;
 		var rgx = response.match("[0-9]+\/[0-9]+");
 		if(rgx != null){
 			//console.log(rgx[0]);

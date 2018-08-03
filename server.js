@@ -83,7 +83,7 @@ function influxIt(measurement, value){
 	console.log("writing measurement: " + measurement + " with value: " + value);
 	var data = measurement + " value=" + value;
 	var opt = {
-		host: "10.0.0.21",
+		host: "redacted.redacted.com",
 		port: 8086,
 		path: '/write?db=telegraf',// + db,
 		method: 'POST',
@@ -98,7 +98,7 @@ function influxIt(measurement, value){
 }
 
 	
-	login("mcarc1234$");
+	login("REDACTED");
 	setInterval(getcount, 5000);
 	//setInterval(announce, 5000);
 	//while(!connected){}
